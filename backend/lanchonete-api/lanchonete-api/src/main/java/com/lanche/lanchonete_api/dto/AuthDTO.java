@@ -2,13 +2,17 @@ package com.lanche.lanchonete_api.dto;
 
 import com.lanche.lanchonete_api.model.Usuario;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 public class AuthDTO {
 
     @Data
     public static class LoginRequest {
         @NotBlank(message = "Email é obrigatório")
+        @Email(message = "Email inválido")
         private String email;
 
         @NotBlank(message = "Senha é obrigatória")
@@ -16,6 +20,9 @@ public class AuthDTO {
     }
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class LoginResponse {
         private String token;
         private String nome;
@@ -24,6 +31,9 @@ public class AuthDTO {
     }
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class RegisterRequest {
         @NotBlank(message = "Nome é obrigatório")
         private String nome;

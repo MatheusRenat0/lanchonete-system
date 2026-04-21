@@ -2,21 +2,25 @@ package com.lanche.lanchonete_api.service;
 
 import com.lanche.lanchonete_api.model.Usuario;
 import com.lanche.lanchonete_api.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Usuario salvar(Usuario usuario) {
         if (usuario.getId() == null && usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("Este e-mail já está cadastrado no sistema.");
         }
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        
         return usuarioRepository.save(usuario);
     }
 
