@@ -1,5 +1,6 @@
 package com.lanche.lanchonete_api.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -23,6 +24,7 @@ public class Venda {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @JsonManagedReference 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ItemVenda> itens = new ArrayList<>();
